@@ -14,10 +14,12 @@
       - Reserve BioHPC workstation, log in (e.g. `ssh kja68@cbsulm04.biohpc.cornell.edu`), create and change to working directory `mkdir /workdir/kja68`, `cd /workdir/kja68`
       - Copy raw sequence files from home directory to working directory ` cp /home/kja68/raw_sequence_files/*.gz  /workdir/kja68/` 
       - Run [fastqc_multiqc.sh](fastqc_multiqc.sh) (see BioHPC software guides: [fastqc](https://biohpc.cornell.edu/lab/userguide.aspx?a=software&i=74#c), [multiqc](https://biohpc.cornell.edu/lab/userguide.aspx?a=software&i=323))
-      - (Optional) Display the multiqc_summary.html on GitHub using [these steps](https://www.finex.co/how-to-display-html-in-github/)
+      - (Optional) Display the multiqc_summary.html (or any .html) on GitHub using [these steps](https://www.finex.co/how-to-display-html-in-github/)
    
-   3. Remove barcodes and adaptors
-      - You need to remove the adaptors if the sequencing (see [this page for a good explanation](https://support.illumina.com/bulletins/2016/04/adapter-trimming-why-are-adapter-sequences-trimmed-from-only-the--ends-of-reads.html))
+   3. Remove primers and/or adaptors
+      - If primers are at the start of your reads and are a constant length, you can use the trimLeft = c(FWD_PRIMER_LEN, REV_PRIMER_LEN) argument of dada2’s filtering functions to remove the primers (see step 4). [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic) would also work fine here. 
+      - If you added heterogeneity spacers before the primers to increase the complexity of your samples for sequencing, you can remove them using the [Trimming_HS_Metagenomics](https://github.com/noushing/Trimming_HS_Metagenomics) code. Then proceed with removing the primers as above. 
+      - If sequencing extends beyond the length of the amplicon, the adapter and primer sequences will be found on the 3’ end of the read, and you will need to remove them (see [this page for a good explanation](https://support.illumina.com/bulletins/2016/04/adapter-trimming-why-are-adapter-sequences-trimmed-from-only-the--ends-of-reads.html)). 
    4. Filter, trim, merge pairs, remove chimeras (DADA2 pipeline)
    5. Taxonomic assignment (BLAST)
    6. Data filtering
