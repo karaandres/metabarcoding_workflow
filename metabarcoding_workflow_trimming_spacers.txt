@@ -1,0 +1,26 @@
+cd /workdir/kja68/
+mkdir raw_sequence_files_R1
+mkdir raw_sequence_files_R2
+
+# Copy forward sequences to raw_sequence_files_R1
+cp /home/kja68/Peru_metabarcoding/raw_sequence_files/*R1.fastq.gz  /workdir/kja68/raw_sequence_files_R1
+
+# Copy reverse sequences to raw_sequence_files_R2
+cp /home/kja68/Peru_metabarcoding/raw_sequence_files/*R2.fastq.gz  /workdir/kja68/raw_sequence_files_R2
+
+# update running scripts with primer sequences and copy all scripts into your work directory
+cp /home/kja68/Trimming_HS_Metagenomics-master/Trimming_HS_Primers.pl /workdir/kja68/
+cp /home/kja68/Trimming_HS_Metagenomics-master/Running_Script_R1.sh /workdir/kja68/
+cp /home/kja68/Trimming_HS_Metagenomics-master/Running_Script_R2.sh /workdir/kja68/
+sh Running_Script_R1.sh
+sh Running_Script_R2.sh
+
+# create directory and copy trimmed sequences into new directory
+mkdir trimmed
+cp -a raw_sequence_files_R1/Trimmed/ /workdir/kja68/trimmed/
+cp -a raw_sequence_files_R2/Trimmed/ /workdir/kja68/trimmed/
+cd trimmed
+
+# NOTE: file names now have format [SAMPLENAME]_TrimmedHS_R1_FASTQ.fastq.gz
+# to make file names manageable, remove "_TrimmedHS_R1_FASTQ" from all files
+for f in *_TrimmedHS_R1_FASTQ.*; do mv -i -- "$f" "${f//_TrimmedHS_R1_FASTQ./.}"; done
