@@ -35,6 +35,7 @@
       - To get species-level information, copy the nucleotide and taxonomic databases into your directory and run blastn. Output formats are customizable depending on what information you need (for more information on output formats, see `blastn -help` then look for the field called `outfmt`)
       - To get higher taxonomic info based on taxids, download [tax_trace.pl](https://github.com/theo-allnutt-bioinformatics/scripts/blob/master/tax_trace.pl) and the [taxonomy database](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) from NCBI and copy these into your directory
       - example: [metabarcoding_workflow_blast.txt](metabarcoding_workflow_blast.txt)
+      - If you have sequences that are not yet on NCBI (e.g. if you Sanger sequenced tissues to add to the reference database) you can run a local blast. Example: [local_blast.txt](local_blast.txt) 
    
    6. Data filtering
    
